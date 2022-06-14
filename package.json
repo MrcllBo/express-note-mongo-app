@@ -1,0 +1,65 @@
+{
+  "name": "express-note-mongo-app",
+  "version": "1.0.0",
+  "description": "Note Express App",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "test": " node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "format:check": "prettier --single-quote --check .",
+    "format:write": "prettier --single-quote --write .",
+    "lint:check": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "prepare": "husky install"
+  },
+  "type": "module",
+  "keywords": [
+    "express",
+    "express-note-app",
+    "express-skeleton",
+    "express-js"
+  ],
+  "author": "Daniele Barbaro",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-jest": "^26.5.3",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-unused-imports": "^2.0.0",
+    "express": "^4.18.1",
+    "express-validator": "^6.14.1",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.1",
+    "mongodb": "^4.7.0",
+    "mongoose": "^6.3.8",
+    "nodemon": "^2.0.16",
+    "prettier": "^2.6.2",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.16.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-import": "^2.26.0",
+    "jest": "^28.1.0",
+    "superagent": "^7.1.3",
+    "supertest": "^6.2.3"
+  },
+  "jest": {
+    "verbose": true
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --single-quote --write",
+      "eslint --fix"
+    ]
+  }
+}

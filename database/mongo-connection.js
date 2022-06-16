@@ -12,12 +12,12 @@ async function atlasConnection() {
 
   try {
     mongoose.connect(
-        uri,
-        {
-          useNewUrlParser: true,
-          useUnifiedTopology: true,
-        },
-        () => console.log('Database connection established!'),
+      uri,
+      {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      },
+      () => console.log('Database connection established!'),
     );
   } catch (err) {
     console.error(`Error connecting to the database. \n ${err}`);

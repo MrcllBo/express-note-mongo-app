@@ -1,6 +1,6 @@
 // Middleware auth realizzato in classe
 const authMiddleware = (request, response, next) => {
-  const {headers} = request;
+  const { headers } = request;
 
   if (headers['secret'] === process.env.API_KEY) {
     next();

@@ -6,20 +6,21 @@ module.exports = {
     node: true,
     'jest/globals': true,
   },
-  extends: ['prettier', 'eslint:recommended', 'plugin:jest/recommended', 'google'],
-  plugins: ['prettier', 'unused-imports', 'jest'],
+  extends: ['eslint:recommended', 'plugin:jest/recommended', 'prettier'],
+  plugins: ['unused-imports', 'jest', 'prettier'],
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
   rules: {
+    'linebreak-style': 0,
     'jest/no-disabled-tests': 'warn',
     'jest/no-focused-tests': 'error',
     'jest/no-identical-title': 'error',
     'jest/prefer-to-have-length': 'warn',
     'jest/valid-expect': 'error',
     'require-jsdoc': 0,
-    'max-len': ['error', { code: 100 }],
+    'max-len': ['error', { code: 100, ignoreUrls: true }],
     'new-cap': [
       'error',
       {

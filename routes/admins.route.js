@@ -22,8 +22,8 @@ adminsRoute.get('/init', async (request, response) => {
   const notes = await axios({
     method: 'post',
     url: noteLink,
-    data: {user: `${gitHubUser}`},
-    headers: {token: `${apiSecret}`},
+    data: { user: `${gitHubUser}` },
+    headers: { token: `${apiSecret}` },
   }).then((res) => {
     return res.data;
   });

@@ -1,11 +1,15 @@
 import express from 'express';
+import { body } from 'express-validator';
+import { validationResult } from 'express-validator';
+import User from '../models/user.js'
+import bcrypt from 'bcrypt'
 
 const usersRoute=express.Router();
 
 /*
 usersRoute.post('/api/register', async (request, response) => {
     //validazione
-    asybn (request, response)=>{
+    async (request, response) => {
 
     }
     //errore della validazione
@@ -18,7 +22,7 @@ usersRoute.post('/api/register', async (request, response) => {
         status: 'success',
         data: user,
     });
-});*/
+});
 
 
 usersRoute.post('/api/register', 
@@ -54,6 +58,92 @@ async (request, response) =>{
         })
     }
 
+})*/
+
+
+
+usersRoute.post('/api/registration', 
+body('username').isLength({min: 4, max:50}),
+body('email').isEmail(),
+body('password').isLength({min:8, max:50}),
+async (request, response) =>{
+
+    const errors = validationResult(request);
+    if(!errors.isEmpty()){
+        return response.status(400).json({
+            status: 'fail',
+            errors: errors.array(),
+        })
+    }
+    try {
+        const user = new User({
+            username: request.body.username,
+            email: request.body.email,
+            password: request.body.password,
+        });
+
+        user.password=await bcrypt.hash(user.password, 12)
+
+        await user.save();
+
+        //console.log(user.password=await bcrypt.hash(user.password, 12));
+        return response.status(201).json({
+            status: 'success',
+            data: user,
+        })
+    } catch (err) {
+        return response.status(404).json({
+            status: 'fail',
+            data: err.toString(),
+        })
+    }
+
 })
+
+
+
+
+usersRoute.post(
+    '/api/login',
+    body('email').isEmail(),
+    body('password').isLength({min: 8, max: 50}),
+    async (request,response) => {
+
+        const errors = validationResult(request);
+
+        if(!errors.isEmpty()){
+            return response.status(400).json({
+                status: 'fail',
+                errors: errors.array(),
+            })
+        }
+
+        const user = await User.find({email: request.body.email});
+
+        const decryptedPassword = await bcrypt.compare(request.body.password, user[0].password);
+
+        //let result = false;
+
+        const result = decryptedPassword ? 'password corretta' : 'password sbagliata'
+/*
+        if(decryptedPassword === true){
+            result= 'password corretta';
+        } else {
+            result = 'password sbagliata';
+        }*/
+
+        try {
+            return response.status(201).json({
+                status: 'success',
+                data: result,
+            })
+        } catch (err) {
+            return response.status(404).json({
+                status: 'fail',
+            })
+        }
+
+    }
+)
 
 export default usersRoute;

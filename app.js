@@ -17,7 +17,8 @@ const app = express();
 app.use(express.json());
 app.use(logMiddleware);
 app.use(admins);
-app.use(notes)
+app.use(notes);
+app.use(users);
 /*
 app.get('/api/notes', async (request, response) =>{
   try {

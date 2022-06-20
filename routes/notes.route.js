@@ -2,6 +2,8 @@ import express from 'express';
 import { body } from 'express-validator';
 import { validationResult } from 'express-validator';
 import Note from '../models/note.js'
+import JWTauthMiddleware from '../middlewares/jwt.middleware.js';
+
 const notesRoute = express.Router();
 
 
@@ -25,6 +27,7 @@ body('user').isLength({min: 1, max:50}),
 body('title').isLength({min:5, max:30}),
 body('content').isLength({min:1, max:100}),
 body('date').isDate(), 
+JWTauthMiddleware,
 async (request, response) =>{
 /*
     body('user').isLenbght({min: 1, max:50}),
